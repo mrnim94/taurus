@@ -1,8 +1,11 @@
 package handler
 
 import (
+	"fmt"
 	"github.com/labstack/echo/v4"
+	"gopkg.in/yaml.v2"
 	"net/http"
+	"os"
 	"os/exec"
 	"taurus/log"
 	"taurus/model"
@@ -10,6 +13,33 @@ import (
 )
 
 type AwsHandler struct {
+}
+
+func (a AwsHandler) HandlerScheduleAutoScalingGroupAWS() error {
+
+	var cfg model.Schedule
+	loadConfigFile(&cfg)
+	fmt.Println(len(cfg.Autoscalings))
+	//for i := 0; i < len(cfg.Autoscalings); i++ {
+	//	fmt.Println(cfg.Autoscalings[i])
+	//}
+	for i := 0; i < 3; i++ {
+		fmt.Println(i)
+	}
+
+	return nil
+}
+
+func loadConfigFile(cfg *model.Schedule) {
+	f, err := os.ReadFile("config_file/autoscaling_on_off.yaml")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	err = yaml.Unmarshal(f, &cfg)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 func (a AwsHandler) HandlerUpdateAutoScalingGroupAWS(c echo.Context) error {
@@ -42,7 +72,7 @@ func (a AwsHandler) HandlerUpdateAutoScalingGroupAWS(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, model.Response{
 		StatusCode: http.StatusOK,
-		Message:    "thành công",
+		Message:    "Updateing AutoScalingGroup-AWS is Successful",
 		Data:       string(out),
 	})
 }

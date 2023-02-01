@@ -15,4 +15,5 @@ func (api *API) SetupRouter() {
 
 	user := api.Echo.Group("/aws")
 	user.POST("/get-autoscaling-group", api.AwsHandler.HandlerGetAutoScalingGroupAWS)
+	user.POST("/update-autoscaling-group", api.AwsHandler.HandlerUpdateAutoScalingGroupAWS)
 }

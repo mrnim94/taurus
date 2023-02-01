@@ -19,6 +19,8 @@ func main() {
 
 	awsHandler := handler.AwsHandler{}
 
+	awsHandler.HandlerScheduleAutoScalingGroupAWS()
+
 	api := router.API{
 		Echo:       e,
 		AwsHandler: awsHandler,
