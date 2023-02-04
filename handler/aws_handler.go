@@ -18,6 +18,8 @@ type AwsHandler struct {
 	Echo *echo.Context
 }
 
+const Profile = "--profile"
+
 func (a *AwsHandler) HandlerScheduleAutoScalingGroupAWS() error {
 
 	var cfg model.Schedule
@@ -36,7 +38,7 @@ func (a *AwsHandler) HandlerScheduleAutoScalingGroupAWS() error {
 				"--min-size", autoscaling.Config.Min,
 				"--max-size", autoscaling.Config.Max,
 				"--desired-capacity", autoscaling.Config.Desired,
-				"--profile", autoscaling.Profile).Output()
+				Profile, autoscaling.Profile).Output()
 			if err != nil {
 				log.Error(err)
 			}
@@ -77,7 +79,7 @@ func (a *AwsHandler) HandlerUpdateAutoScalingGroupAWS(c echo.Context) error {
 		"--min-size", req.Min,
 		"--max-size", req.Max,
 		"--desired-capacity", req.Desired,
-		"--profile", req.Profile).Output()
+		Profile, req.Profile).Output()
 
 	if err != nil {
 		log.Error(err.Error())
@@ -111,7 +113,7 @@ func (a *AwsHandler) HandlerGetAutoScalingGroupAWS(c echo.Context) error {
 	out, err := exec.Command("aws", "autoscaling", "describe-auto-scaling-groups",
 		"--auto-scaling-group-names", req.Name,
 		"--query", "AutoScalingGroups[*].{MinSize:MinSize,MaxSize:MaxSize,DesiredCapacity:DesiredCapacity}",
-		"--profile", req.Profile,
+		Profile, req.Profile,
 		"--output", "json").Output()
 	//cmd.Stderr = os.Stderr
 
