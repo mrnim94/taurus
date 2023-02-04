@@ -12,6 +12,7 @@ func init() {
 	os.Setenv("APP_NAME", "aws")
 	log.InitLogger(false)
 	os.Setenv("TZ", "Asia/Ho_Chi_Minh")
+
 }
 
 func main() {

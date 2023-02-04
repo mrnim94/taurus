@@ -1,1 +1,3 @@
 config_file/autoscaling_on_off.yaml
+log_files/error/*
+log_files/info/*

@@ -2,31 +2,49 @@ package handler
 
 import (
 	"fmt"
+	"github.com/go-co-op/gocron"
 	"github.com/labstack/echo/v4"
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
 	"net/http"
 	"os"
 	"os/exec"
 	"taurus/log"
 	"taurus/model"
 	"taurus/model/request"
+	"time"
 )
 
 type AwsHandler struct {
+	Echo *echo.Context
 }
 
-func (a AwsHandler) HandlerScheduleAutoScalingGroupAWS() error {
+func (a *AwsHandler) HandlerScheduleAutoScalingGroupAWS() error {
 
 	var cfg model.Schedule
 	loadConfigFile(&cfg)
-	fmt.Println(len(cfg.Autoscalings))
-	//for i := 0; i < len(cfg.Autoscalings); i++ {
-	//	fmt.Println(cfg.Autoscalings[i])
-	//}
-	for i := 0; i < 3; i++ {
-		fmt.Println(i)
+
+	s := gocron.NewScheduler(time.UTC)
+
+	for i, autoscaling := range cfg.Autoscalings {
+		autoscaling := autoscaling
+		log.Info("Setup Schedule ", i, " ==> ", autoscaling.Schedule)
+		s.Cron(autoscaling.Schedule).Do(func() {
+			out, err := exec.Command("aws",
+				"autoscaling",
+				"update-auto-scaling-group",
+				"--auto-scaling-group-name", autoscaling.GroupName,
+				"--min-size", autoscaling.Config.Min,
+				"--max-size", autoscaling.Config.Max,
+				"--desired-capacity", autoscaling.Config.Desired,
+				"--profile", autoscaling.Profile).Output()
+			if err != nil {
+				log.Error(err)
+			}
+			log.Info(out)
+		})
 	}
 
+	s.StartAsync()
 	return nil
 }
 
@@ -42,7 +60,7 @@ func loadConfigFile(cfg *model.Schedule) {
 	}
 }
 
-func (a AwsHandler) HandlerUpdateAutoScalingGroupAWS(c echo.Context) error {
+func (a *AwsHandler) HandlerUpdateAutoScalingGroupAWS(c echo.Context) error {
 	req := request.ReqUpdateAutoScalingGroup{}
 	if err := c.Bind(&req); err != nil {
 		log.Error(err.Error())
@@ -77,7 +95,7 @@ func (a AwsHandler) HandlerUpdateAutoScalingGroupAWS(c echo.Context) error {
 	})
 }
 
-func (a AwsHandler) HandlerGetAutoScalingGroupAWS(c echo.Context) error {
+func (a *AwsHandler) HandlerGetAutoScalingGroupAWS(c echo.Context) error {
 	req := request.ReqAutoScalingGroup{}
 
 	if err := c.Bind(&req); err != nil {
