@@ -33,4 +33,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/doctor-doom:latest, ${{ secrets.DOCKER_HUB_USERNAME }}/doctor-doom:${{ env.RELEASE_VERSION }}
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/taurus:latest, ${{ secrets.DOCKER_HUB_USERNAME }}/taurus:${{ env.RELEASE_VERSION }}
