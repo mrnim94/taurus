@@ -29,6 +29,7 @@ jobs:
           image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
           format: 'table'
           severity: 'CRITICAL,HIGH'
+          security-checks: 'vuln'
       #####
       - name: Set env
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
