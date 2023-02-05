@@ -1,6 +1,6 @@
-FROM golang:1.20.0-alpine
+FROM golang:1.20.0-bullseye
 
-RUN apk update && apk add git && apk add unzip && apk add curl
+RUN apt update -y && apt install git -y && apt install unzip -y && apt install curl -y
 
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 RUN unzip awscliv2.zip
