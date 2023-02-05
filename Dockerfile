@@ -1,6 +1,6 @@
 FROM golang:1.19.4-alpine
 
-RUN apk update && apk add git && apk add unzip
+RUN apk update && apk add git && apk add unzip && apk add curl
 
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 RUN unzip awscliv2.zip
