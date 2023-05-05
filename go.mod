@@ -3,7 +3,7 @@ module taurus
 go 1.19
 
 require (
-	github.com/go-co-op/gocron v1.23.0
+	github.com/go-co-op/gocron v1.25.0
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/labstack/echo/v4 v4.10.2
 	github.com/labstack/gommon v0.4.0
@@ -28,5 +28,5 @@ require (
 	golang.org/x/sync v0.1.0 // indirect
 	golang.org/x/sys v0.5.0 // indirect
 	golang.org/x/text v0.7.0 // indirect
-	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect
+	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 )
