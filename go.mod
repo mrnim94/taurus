@@ -3,7 +3,7 @@ module taurus
 go 1.19
 
 require (
-	github.com/go-co-op/gocron v1.37.0
+	github.com/go-co-op/gocron/v2 v2.2.4
 	github.com/go-co-op/gocron/v2 v2.2.4
 	github.com/go-resty/resty/v2 v2.9.1
 	github.com/labstack/echo/v4 v4.11.1
