@@ -1,10 +1,10 @@
 module taurus
 
-go 1.19
+go 1.22
 
 require (
 	github.com/go-co-op/gocron v1.37.0
-	github.com/go-co-op/gocron/v2 v2.2.4
+	github.com/go-co-op/gocron/v2 v2.22.0
 	github.com/go-resty/resty/v2 v2.13.1
 	github.com/labstack/echo/v4 v4.11.1
 	github.com/labstack/gommon v0.4.2
@@ -16,7 +16,7 @@ require (
 
 require (
 	github.com/google/uuid v1.6.0 // indirect
-	github.com/jonboulle/clockwork v0.4.0 // indirect
+	github.com/jonboulle/clockwork v0.5.0 // indirect
 	github.com/kr/pretty v0.3.0 // indirect
 	github.com/lestrrat-go/strftime v1.0.6 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
